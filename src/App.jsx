@@ -3,6 +3,9 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import MainLayout from './layout/MainLayout'
 
 import Home from './pages/Home'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import About from './pages/About'
 
 function App() {
 
@@ -10,7 +13,10 @@ function App() {
     {
       element: <MainLayout />,
       children: [
-        { path: '/', index: true, element: <Home /> }
+        { path: '/home', element: <Home /> },
+        { path: '/login', element: <Login /> },
+        { path: '/register', element: <Register /> },
+        { path: '/about', element: <About /> }
       ],
     },
   ]);
