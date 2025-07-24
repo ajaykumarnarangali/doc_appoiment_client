@@ -5,7 +5,7 @@ import Footer from '../components/Footer'
 
 function MainLayout() {
   return (
-    <div className="min-h-screen flex flex-col max-w-[1228px] mx-auto font-custom">
+    <div className="min-h-screen flex flex-col lg:max-w-[1000px] xl:max-w-[1228px] mx-auto font-custom">
       <Header />
       <main className="flex-grow py-4">
         <Outlet/>
