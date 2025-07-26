@@ -1,11 +1,16 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { validateLoginForm } from "../../utils/validations";
 import { login } from "../../service/authService";
+import { setToken } from "./authSlice";
+import { useDispatch } from "react-redux";
 
 function LoginForm() {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [error, setError] = useState({});
+    const dispatch = useDispatch();
+
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -20,10 +25,15 @@ function LoginForm() {
             setError(errors);
             return;
         }
-        console.log(formData);
         try {
-            // const response = await login(formData); // API call
-            // console.log("Login successful", response);
+            const response = await login(formData);
+            console.log(response);
+            if (response.requires_otp) {
+                navigate(`/otp?email=${encodeURIComponent(formData.email)}`);
+            } else {
+                dispatch(setToken(response?.access_token));
+                navigate('/home');
+            }
         } catch (err) {
             console.error(err.message);
             setError({ general: err.message || "Login failed" });

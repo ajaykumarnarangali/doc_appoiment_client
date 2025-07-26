@@ -2,11 +2,14 @@ import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { verifyOtp } from '../../service/authService'
 import { useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setToken } from './authSlice'
 
 function OtpForm() {
 
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
+    const dispatch = useDispatch();
 
     const OTP_DIGIT_COUNT = 6;
     const inputRefs = useRef([]);
@@ -62,8 +65,8 @@ function OtpForm() {
             const OTP = otp.join("");
             const email = queryParams.get("email");
             const response = await verifyOtp(OTP, email);
-            console.log(response);
             if (response.success) {
+                dispatch(setToken(response?.access_token));
                 navigate('/home');
             }
         } catch (err) {

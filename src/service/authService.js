@@ -2,6 +2,7 @@ export const login = async (payload) => {
     try {
         const res = await fetch(`${import.meta.env.VITE_BASE_URL}/auth/login`, {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -43,6 +44,7 @@ export const verifyOtp = async (payload, email) => {
     try {
         const res = await fetch(`${import.meta.env.VITE_BASE_URL}/auth/verify-otp?email=${email}`, {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -60,3 +62,23 @@ export const verifyOtp = async (payload, email) => {
         throw err;
     }
 };
+
+export const refreshToken = async () => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_BASE_URL}/auth/refresh-token`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        const data = await res.json();
+        if (!res.ok || data.success === false) {
+            throw new Error(data.message || 'refreshing token failed');
+        }
+        return data;
+    } catch (err) {
+        throw err;
+    }
+}

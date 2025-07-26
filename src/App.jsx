@@ -1,4 +1,5 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import useAuthInit from './hooks/useAuthInit'
 
 import MainLayout from './layout/MainLayout'
 
@@ -9,6 +10,8 @@ import About from './pages/About'
 import Otp from './pages/Otp'
 
 function App() {
+
+  useAuthInit();
 
   const router = createBrowserRouter([
     {
