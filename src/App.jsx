@@ -8,6 +8,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import About from './pages/About'
 import Otp from './pages/Otp'
+import Profile from './features/user/ProfileForm'
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
         { path: '/register', element: <Register /> },
         { path: '/otp', element: <Otp /> },
         { path: '/about', element: <About /> },
+        { path: '/profile', element: <Profile /> }
       ],
     },
   ]);

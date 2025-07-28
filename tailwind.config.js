@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        custom: ['Outfit', 'sans-serif'],
+        custom: ['Outfit'],
       },
       colors: {
         bannerColor: '#5F6FFF',
