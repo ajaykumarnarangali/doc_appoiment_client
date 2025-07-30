@@ -1,28 +1,60 @@
-import { useRef, useState } from "react"
-import { useSelector } from "react-redux";
+import { useRef, useState, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux";
+import { updateProfileData, updateProfileImage } from '../../service/userService'
+import { setUser } from '../../features/auth/authSlice'
 
 function ProfileForm() {
 
   const [isEdit, setIsedit] = useState(false);
-  const { user } = useSelector(state => state.auth);
+  const [changeImage, setChangeImage] = useState(false)
+  const { user, accessToken } = useSelector(state => state.auth);
+  const dispatch = useDispatch();
 
   const [image, setImage] = useState("");
+  const [error, setError] = useState(null)
   const imageRef = useRef();
   const [formData, setFormData] = useState({
-    username: user?.username || "User name",
-    email: user?.email || "",
-    phone: user?.phone || "",
-    address: user?.address || "",
-    gender: user?.gender || "",
-    dob: user?.dob || ""
+    username: "",
+    email: "",
+    phone: "",
+    address: "",
+    gender: "",
+    dob: ""
   });
 
-  const handleImageChange = (e) => {
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        username: user.username ?? "",
+        email: user.email ?? "",
+        phone: user.phone ?? "",
+        address: user.address ?? "",
+        gender: user.gender ?? "",
+        dob: user.dob ?? "",
+      });
+    }
+  }, [user]);
+
+  const handleImageChange = async (e) => {
     const selectedImage = e.target.files[0];
     setImage(selectedImage);
 
     const ImageData = new FormData();
     ImageData.append('image', selectedImage);
+    try {
+      const data = await updateProfileImage(accessToken, ImageData);
+      if (data?.success == false) {
+        console.log(data.message);
+        setError(data?.message);
+        return;
+      }
+      if (data?.user) {
+        dispatch(setUser({ user: data?.user }));
+        setChangeImage(false);
+      }
+    } catch (error) {
+      setError(error.message);
+    }
   }
 
 
@@ -35,10 +67,24 @@ function ProfileForm() {
   }
 
 
-  const handleProfile = (e) => {
+  const handleProfile = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    setIsedit(false)
+    try {
+      const data = await updateProfileData(accessToken, formData);
+      if (data?.success == false) {
+        console.log(data.message);
+        setError(data?.message);
+        return;
+      }
+      if (data?.user) {
+        dispatch(setUser({ user: data?.user }));
+        setChangeImage(false);
+      }
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setIsedit(false);
+    }
   }
 
 
@@ -47,10 +93,17 @@ function ProfileForm() {
       <form className="flex flex-col"
         onSubmit={handleProfile}>
         <div className='flex flex-col gap-6 max-w-md'>
-          <div className='w-36 h-36 bg-blue-400 rounded-md'>
-            <img src={image ? URL.createObjectURL(image) : user?.image} alt="img" className='w-full h-full rounded-md object-cover object-center'
-              onClick={() => { isEdit && imageRef.current.click() }} />
+          <div className='w-36 h-36 bg-blue-400 rounded-md flex gap-2'>
+            <img src={image ? URL.createObjectURL(image) : user?.image?.url} alt="img" className='w-full h-full rounded-md object-cover object-center'
+              onClick={() => { changeImage && imageRef.current.click() }} />
             <input type="file" className="hidden" ref={imageRef} onChange={handleImageChange} />
+            <button className='p-2 h-9 border text-sm text-center rounded-full border-blue-300 hover:bg-blue-500 hover:text-white cursor-pointer'
+              onClick={() => { setChangeImage(true) }}
+              key="edit-image"
+              type="button"
+            >
+              Image
+            </button>
           </div>
           <div>
             <h1 className='text-3xl mb-2'>{formData.username}</h1>
@@ -100,6 +153,7 @@ function ProfileForm() {
               value={formData.dob}
               onChange={handleFormchange} />
           </div>
+          {error && <p className="text-sm text-red-500"> {error}</p>}
           <div>
             {isEdit ?
               <button className='px-6 h-9 border mt-3 text-sm text-center rounded-full border-blue-300 hover:bg-blue-500 hover:text-white cursor-pointer'

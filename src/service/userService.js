@@ -50,6 +50,7 @@ export const updateProfileImage = async (token, formData) => {
             body: formData
         });
         const data = await res.json();
+        console.log(data);
         if (!res.ok || data.success === false) {
             throw new Error(data.message || 'user profile updation failed');
         }
