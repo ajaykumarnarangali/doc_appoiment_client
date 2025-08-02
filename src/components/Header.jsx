@@ -20,7 +20,7 @@ function Header() {
             </Link>
           </li>
           <li>
-            <Link  to={'/about'} className="underline decoration-blue-500 underline-offset-4 decoration-[1.5px]">
+            <Link to={'/about'} className="underline decoration-blue-500 underline-offset-4 decoration-[1.5px]">
               ABOUT
             </Link>
           </li>
@@ -31,7 +31,7 @@ function Header() {
           </li>
         </ul>
         <div className='border text-xs px-5 py-[4px] rounded-full'>
-          <Link>
+          <Link to={'/admin/login'}>
             Admin Panel
           </Link>
         </div>

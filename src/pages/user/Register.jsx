@@ -1,4 +1,4 @@
-import RegForm from "../features/auth/RegForm"
+import RegForm from "../../features/auth/RegForm"
 
 function Register() {
     return (

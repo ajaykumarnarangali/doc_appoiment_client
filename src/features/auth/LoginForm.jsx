@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { validateLoginForm } from "../../utils/validations";
 import { login } from "../../service/authService";
 import { setToken } from "./authSlice";
 import { useDispatch } from "react-redux";
 
-function LoginForm() {
+function LoginForm({ Heading, Redirecter }) {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [error, setError] = useState({});
     const dispatch = useDispatch();
@@ -32,7 +32,18 @@ function LoginForm() {
                 navigate(`/otp?email=${encodeURIComponent(formData.email)}`);
             } else {
                 dispatch(setToken(response?.access_token));
-                navigate('/home');
+                const role = response?.role;
+                switch (role) {
+                    case 'admin':
+                        navigate('/admin/dashboard');
+                        break;
+                    case 'doctor':
+                        navigate('/doctor/home');
+                        break;
+                    case 'user':
+                    default:
+                        navigate('/home');
+                }
             }
         } catch (err) {
             console.error(err.message);
@@ -42,8 +53,7 @@ function LoginForm() {
 
     return (
         <div className="border p-8 rounded-xl shadow-md w-full max-w-sm text-formText">
-            <h2 className="text-2xl font-semibold mb-2">Login</h2>
-            <p className="text-sm mb-4">Please log in to book appointment</p>
+            {Heading}
             <form className="space-y-4" onSubmit={handleLogin}>
                 <div>
                     <label className="block text-sm mb-1">Email</label>
@@ -77,13 +87,7 @@ function LoginForm() {
                     Login
                 </button>
             </form>
-
-            <p className="text-sm mt-4 text-start">
-                Create a new account?{" "}
-                <Link to="/register" className="text-indigo-600 hover:underline">
-                    Click here
-                </Link>
-            </p>
+            {Redirecter}
         </div>
     );
 }
