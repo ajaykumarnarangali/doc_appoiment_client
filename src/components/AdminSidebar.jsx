@@ -38,7 +38,7 @@ function AdminSidebar() {
                 {
                     SidebarElements.map((ele, ind) => (
                         <Link to={ele.path} key={ind} className={`hover:bg-slate-50 h-12 flex items-center 
-                        ${path.pathname == ele.path ? 'border-r-4 border-r-blue-400' : ''}`}>
+                        ${path.pathname == ele.path ? 'border-r-4 bg-slate-100 border-r-blue-400' : ''}`}>
                             <div className='flex gap-3 px-8 text-sm items-center'>
                                 <img src={ele.icon} className='w-5' />
                                 <h1>{ele.name}</h1>
