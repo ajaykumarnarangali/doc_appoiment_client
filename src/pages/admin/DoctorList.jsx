@@ -2,7 +2,7 @@ import DList from '../../features/admin/DList'
 
 function DoctorList() {
     return (
-        <div>
+        <div className='w-full h-full'>
             <DList />
         </div>
     )

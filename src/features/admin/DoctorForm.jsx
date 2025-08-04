@@ -5,13 +5,15 @@ import { validateDoctRegForm } from '../../utils/validations';
 import { useNavigate } from 'react-router-dom';
 import { DoctorReg } from '../../service/adminService'
 import { useSelector } from 'react-redux';
+import Loader from '../../components/Loader';
 
 function DoctorForm() {
 
   const imageRef = useRef();
   const navigate = useNavigate();
-  const { accessToken } = useSelector(state => state.auth); 
+  const { accessToken } = useSelector(state => state.auth);
 
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [image, setImage] = useState('');
   const [formData, setFormData] = useState({
@@ -44,12 +46,15 @@ function DoctorForm() {
     e.preventDefault();
     const verror = validateDoctRegForm(formData);
     setError(verror);
+    if (Object.keys(verror).length !== 0) {
+      return;
+    }
     const Form = new FormData();
     Object.entries(formData).forEach(([key, value]) => Form.append(key, value));
     Form.append('image', image);
+    setLoading(true);
     try {
       const response = await DoctorReg(accessToken, Form);
-      console.log(response);
       if (response.success) {
         navigate('/admin/doctor-list')
       }
@@ -57,7 +62,13 @@ function DoctorForm() {
       setError({
         apiError: error?.message
       })
+    } finally {
+      setLoading(false);
     }
+  }
+
+  if (loading) {
+    return <Loader />
   }
 
   return (
