@@ -27,7 +27,6 @@ function LoginForm({ Heading, Redirecter }) {
         }
         try {
             const response = await login(formData);
-            console.log(response);
             if (response.requires_otp) {
                 navigate(`/otp?email=${encodeURIComponent(formData.email)}`);
             } else {
@@ -38,7 +37,7 @@ function LoginForm({ Heading, Redirecter }) {
                         navigate('/admin/dashboard');
                         break;
                     case 'doctor':
-                        navigate('/doctor/home');
+                        navigate('/doctor/dashboard');
                         break;
                     case 'user':
                     default:

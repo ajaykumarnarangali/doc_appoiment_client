@@ -12,12 +12,16 @@ import Profile from './features/user/ProfileForm'
 
 import AdminLayout from './layout/AdminLayout'
 import AdminLogin from './pages/admin/AdminLogin'
-import Dashboard from './pages/admin/Dashboard'
-import Appointments from './pages/admin/Appointments'
+import AdminDashboard from './pages/admin/Dashboard'
+import AdminAppointments from './pages/admin/Appointments'
 import AddDoctor from './pages/admin/AddDoctor'
 import DoctorList from './pages/admin/DoctorList'
 
+import DoctorLayout from './layout/DoctorLayout'
 import DoctorLogin from './pages/doctor/DoctorLogin'
+import DoctorDashboard from './pages/doctor/Dashboard'
+import DoctorAppoinments from './pages/doctor/Appoinments'
+import DoctorProfile from './pages/doctor/Profile'
 
 
 function App() {
@@ -45,12 +49,20 @@ function App() {
     {
       element: <AdminLayout />,
       children: [
-        { path: '/admin/dashboard', element: <Dashboard /> },
-        { path: '/admin/appoinments', element: <Appointments /> },
+        { path: '/admin/dashboard', element: <AdminDashboard /> },
+        { path: '/admin/appoinments', element: <AdminAppointments /> },
         { path: '/admin/add-doctor', element: <AddDoctor /> },
         { path: '/admin/doctor-list', element: <DoctorList /> },
       ]
-    }
+    },
+    {
+      element: <DoctorLayout />,
+      children: [
+        { path: '/doctor/dashboard', element: <DoctorDashboard /> },
+        { path: '/doctor/appoinments', element: <DoctorAppoinments /> },
+        { path: '/doctor/profile', element: <DoctorProfile /> }
+      ]
+    },
   ]);
 
 
