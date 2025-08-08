@@ -38,16 +38,10 @@ function ProfileForm() {
   const handleImageChange = async (e) => {
     const selectedImage = e.target.files[0];
     setImage(selectedImage);
-
     const ImageData = new FormData();
     ImageData.append('image', selectedImage);
     try {
       const data = await updateProfileImage(accessToken, ImageData);
-      if (data?.success == false) {
-        console.log(data.message);
-        setError(data?.message);
-        return;
-      }
       if (data?.user) {
         dispatch(setUser({ user: data?.user }));
         setChangeImage(false);
