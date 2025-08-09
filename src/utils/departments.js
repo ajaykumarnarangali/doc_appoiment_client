@@ -1,10 +1,11 @@
 const doctorDepartments = [
-    "Cardiology",
-    "General Physician",
-    "Orthopedics",
-    "Pediatrics",
-    "Dermatology",
-    "Gynecology"
+    "Neurologist",
+    "General_Physician",
+    "Gastroenterologist",
+    "Pediatrecian",
+    "Dermatologists",
+    "Gynecologist"
 ];
 
 export default doctorDepartments;
+

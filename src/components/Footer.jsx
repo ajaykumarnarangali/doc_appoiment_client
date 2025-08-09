@@ -3,7 +3,7 @@ import Logo from '/logo.svg'
 function Footer() {
   return (
     <div className='lg:h-64 flex flex-col'>
-      <div className='md:flex-grow flex flex-col gap-4 p-2 md:flex-row lg:p-0 lg:px-1'>
+      <div className='md:flex-grow flex flex-col gap-4 p-4 md:flex-row lg:p-0 lg:px-1'>
         <div className='flex flex-col gap-4 flex-1'>
           <div>
             <img src={Logo} alt="" className='w-40' />

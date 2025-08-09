@@ -3,7 +3,7 @@ import useAuthInit from './hooks/useAuthInit'
 
 import MainLayout from './layout/MainLayout'
 
-import Home from './pages/user/Home'
+import HomePage from './pages/user/HomePage'
 import Login from './pages/user/Login'
 import Register from './pages/user/Register'
 import About from './pages/user/About'
@@ -32,7 +32,7 @@ function App() {
     {
       element: <MainLayout />,
       children: [
-        { path: '/home', element: <Home /> },
+        { path: '/home', element: <HomePage /> },
         { path: '/login', element: <Login /> },
         { path: '/register', element: <Register /> },
         { path: '/otp', element: <Otp /> },
