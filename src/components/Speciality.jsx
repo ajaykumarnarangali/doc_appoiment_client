@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 function Speciality() {
     return (
-        <div className='flex flex-col items-center gap-10'>
+        <div className='flex flex-col items-center gap-5'>
             <div className='flex flex-col items-center gap-2'>
                 <h1 className='text-3xl font-medium'>Find by speciality</h1>
                 <p className='max-w-xs xl:max-w-md w-full text-sm text-formText text-center'>
