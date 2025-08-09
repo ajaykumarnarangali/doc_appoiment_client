@@ -11,7 +11,7 @@ function Speciality() {
                 </p>
             </div>
             <div className='w-full flex justify-center'>
-                <div className='flex gap-6 lg:gap-4 overflow-x-scroll items-center'>
+                <div className='flex gap-6 lg:gap-4 overflow-x-scroll lg:overflow-x-hidden items-center justify-center py-4'>
                     {
                         Specialities.map((each, ind) => (
                             <Link to={`/doctor/${each.dept_url}`} key={ind}>
