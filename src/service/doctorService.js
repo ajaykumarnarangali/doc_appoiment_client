@@ -38,3 +38,45 @@ export const updateProfileImage = async (token, formData) => {
         throw err;
     }
 }
+
+export const addLeave = async (token, date) => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_BASE_URL}/doctor/add-leave`, {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ date })
+        });
+        const data = await res.json();
+        if (!res.ok || data.success === false) {
+            throw new Error(data.message || 'leave added successfully');
+        }
+        return data;
+    } catch (err) {
+        throw err;
+    }
+}
+
+export const removeLeave = async (token, date) => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_BASE_URL}/doctor/remove-leave`, {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ date })
+        });
+        const data = await res.json();
+        if (!res.ok || data.success === false) {
+            throw new Error(data.message || 'leave removed successfully');
+        }
+        return data;
+    } catch (err) {
+        throw err;
+    }
+}
