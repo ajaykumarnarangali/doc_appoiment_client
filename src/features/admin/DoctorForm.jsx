@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { DoctorReg } from '../../service/adminService'
 import { useSelector } from 'react-redux';
 import Loader from '../../components/Loader';
+import dayArray from '../../utils/DayNumber';
 
 function DoctorForm() {
 
@@ -25,14 +26,25 @@ function DoctorForm() {
     about: '',
     speciality: 'General Physician',
     degree: '',
-    address: ''
+    address: '',
+    working: {
+      from: '1',
+      to: '5',
+      time: 'not_selected'
+    }
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name == 'from' || name == 'to' || name == 'time') {
+      setFormData((prev) => {
+        return { ...prev, working: { ...prev.working, [name]: value } };
+      })
+      return;
+    }
     setError((prev) => {
       return { ...prev, [name]: null }
-    })
+    });
     setFormData((prev) => {
       return { ...prev, [name]: value };
     })
@@ -46,15 +58,23 @@ function DoctorForm() {
     e.preventDefault();
     const verror = validateDoctRegForm(formData);
     setError(verror);
+    console.log(formData);
     if (Object.keys(verror).length !== 0) {
       return;
     }
     const Form = new FormData();
-    Object.entries(formData).forEach(([key, value]) => Form.append(key, value));
+    Object.entries(formData).forEach(([key, value]) => {
+      if (typeof value === 'object' && value !== null) {
+        Form.append(key, JSON.stringify(value));
+      } else {
+        Form.append(key, value);
+      }
+    });
     Form.append('image', image);
     setLoading(true);
     try {
       const response = await DoctorReg(accessToken, Form);
+      console.log(response);
       if (response.success) {
         navigate('/admin/doctor-list')
       }
@@ -134,13 +154,13 @@ function DoctorForm() {
               </div>
               <div>
                 <label className="block text-sm mb-1 text-formText">Experience</label>
-                <select name="experience" className='w-full border py-2 outline-none'
+                <select name="experience" className='w-full border py-2 outline-none rounded-lg text-formText'
                   value={formData.experience}
                   onChange={handleChange}
                 >
                   {
                     Array(10).fill(0).map((_, ind) => (
-                      <option value={ind + 1} key={ind}>
+                      <option value={ind + 1} key={ind} className='text-formText'>
                         {ind + 1}
                       </option>
                     ))
@@ -172,15 +192,58 @@ function DoctorForm() {
                 />
                 {error?.fees && <p className="text-red-500 text-sm mt-1">{error.fees}</p>}
               </div>
+              <div>
+                <label className="block text-sm mb-1 text-formText">working days</label>
+                <div className='flex gap-2'>
+                  <div className='flex gap-2 items-center text-sm'>
+                    <label className='text-formText'>From:</label>
+                    <select name="from" className='w-full border py-2 outline-none rounded-lg text-formText'
+                      value={formData.working.from}
+                      onChange={handleChange}>
+                      {
+                        dayArray.map((each, ind) => (
+                          <option value={each.num} key={ind} className='text-formText'>
+                            {each.day}
+                          </option>
+                        ))
+                      }
+                    </select>
+                  </div>
+                  <div className='flex gap-2 items-center text-sm'>
+                    <label className='text-formText'>To:</label>
+                    <select name="to" className='w-full border py-2 outline-none rounded-lg text-formText'
+                      value={formData.working.to}
+                      onChange={handleChange}>
+                      {
+                        dayArray.map((each, ind) => (
+                          <option value={each.num} key={ind} className='text-formText'>
+                            {each.day}
+                          </option>
+                        ))
+                      }
+                    </select>
+                  </div>
+                  <div className='flex gap-2 items-center text-sm'>
+                    <label className='text-formText'>Time:</label>
+                    <select name="time" className='w-full border py-2 outline-none rounded-lg text-formText'
+                      value={formData.working.time}
+                      onChange={handleChange}>
+                      <option value="not_selected">Select Time Slot</option>
+                      <option value="10:00-13:00">10:00 AM - 1:00 PM</option>
+                      <option value="14:00-18:00">2:00 PM - 4:00 PM</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
 
               <div>
                 <label className="block text-sm mb-1 text-formText">Speciality</label>
-                <select name="speciality" className='w-full border py-2 outline-none'
+                <select name="speciality" className='w-full border py-2 outline-none rounded-lg text-formText'
                   value={formData.speciality}
                   onChange={handleChange}>
                   {
                     Speciality.map((each, ind) => (
-                      <option value={each} key={ind}>
+                      <option value={each} key={ind} className='text-formText'>
                         {each}
                       </option>
                     ))

@@ -24,7 +24,7 @@ export const validateRegForm = ({ email, password, username }) => {
 };
 
 export const validateDoctRegForm = ({
-    username, email, password, experience, fees, about, speciality, degree, address
+    username, email, password, experience, fees, about, speciality, degree, address, working
 }) => {
     const verror = {};
     if (!username || username.length < 4) {
