@@ -1,4 +1,4 @@
-import Specialities from '../utils/specialities'
+import Specialities from '../../../utils/specialities'
 import { Link } from 'react-router-dom'
 
 function Speciality() {

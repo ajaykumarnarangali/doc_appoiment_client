@@ -1,5 +1,5 @@
-import DoctorHeader from '../components/DoctorHeader'
-import DoctorSidebar from '../components/DoctorSidebar'
+import DoctorHeader from '../features/doctor/components/DoctorHeader'
+import DoctorSidebar from '../features/doctor/components/DoctorSidebar'
 import { Outlet } from 'react-router-dom'
 
 function DoctorLayout() {

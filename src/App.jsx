@@ -9,6 +9,7 @@ import Register from './pages/user/Register'
 import About from './pages/user/About'
 import Otp from './pages/user/Otp'
 import Profile from './features/user/ProfileForm'
+import AppoinmentPage from './pages/user/AppoinmentPage'
 
 import AdminLayout from './layout/AdminLayout'
 import AdminLogin from './pages/admin/AdminLogin'
@@ -37,7 +38,8 @@ function App() {
         { path: '/register', element: <Register /> },
         { path: '/otp', element: <Otp /> },
         { path: '/about', element: <About /> },
-        { path: '/profile', element: <Profile /> }
+        { path: '/profile', element: <Profile /> },
+        { path: '/appoinment/:docId', element: <AppoinmentPage /> },
       ],
     },
     {

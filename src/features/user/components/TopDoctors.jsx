@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { getAlldoctors } from '../service/adminService'
+import { getAlldoctors } from '../../../service/adminService'
 import { useSelector } from 'react-redux'
-import DocCard from './DocCard'
+import DocCard from '../../../components/DocCard'
 import { Link } from 'react-router-dom';
 
 function TopDoctors() {

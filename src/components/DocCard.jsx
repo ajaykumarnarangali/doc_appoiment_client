@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 
 function DocCard({ doc }) {
     return (
-        <Link to={`/doctor/${doc?._id}`}>
+        <Link to={`/appoinment/${doc?._id}`}>
             <div className='bg-white rounded-lg overflow-hidden flex gap-2 flex-col border-2 border-gray-200 '>
                 <div>
                     <img src={doc?.image?.url} alt="" className="w-full lg:h-60 object-cover object-center" />

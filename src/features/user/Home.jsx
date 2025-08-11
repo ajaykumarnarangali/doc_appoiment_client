@@ -1,7 +1,7 @@
-import Appoinment from "../../components/Appoinment"
-import Banner from "../../components/Banner"
-import Speciality from "../../components/Speciality"
-import TopDoctors from "../../components/TopDoctors"
+import Appoinment from "./components/Appoinment"
+import Banner from "./components/Banner"
+import Speciality from "./components/Speciality"
+import TopDoctors from "./components/TopDoctors"
 
 function Home() {
   return (
