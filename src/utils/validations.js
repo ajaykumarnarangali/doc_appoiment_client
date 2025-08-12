@@ -56,3 +56,25 @@ export const validateDoctRegForm = ({
     }
     return verror;
 }
+
+export const validateAppointmentDate = ({ doctorId, userId, date, time }) => {
+    const verror = {};
+
+    if (!doctorId) {
+        verror.doctorId = "Doctor ID is required.";
+    }
+
+    if (!userId) {
+        verror.userId = "User ID is required.";
+    }
+
+    if (!date) {
+        verror.date = "Date is required.";
+    }
+
+    if (!time) {
+        verror.time = "Time is required.";
+    }
+
+    return verror;
+};

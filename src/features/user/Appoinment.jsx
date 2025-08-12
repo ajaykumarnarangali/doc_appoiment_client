@@ -6,8 +6,9 @@ import { getDoctor } from '../../service/userService'
 import DocDetails from "./components/DocDetails"
 import Booking from './components/Booking'
 import Suggetion from './components/Suggetion'
+
 function Appoinment() {
-  
+
   const { accessToken } = useSelector(state => state.auth);
   const [doctor, setDoctor] = useState({});
   const { error, setError } = useState(null);
@@ -28,14 +29,14 @@ function Appoinment() {
       }
     };
     fetchDoctor()
-  }, [accessToken]);
-  console.log(doctor);
+  }, [accessToken, docId]);
 
   return (
     <div className='px-4 lg:px-0 flex flex-col gap-4'>
       <DocDetails doctor={doctor} error={error} />
-      <Booking working={doctor?.working} />
-      <Suggetion speciality={doctor?.speciality} />
+      <Booking working={doctor?.working} docId={docId}
+        notAvailableDays={doctor?.notAvailableDays} />
+      <Suggetion speciality={doctor?.speciality} docId={docId} />
     </div>
   )
 }

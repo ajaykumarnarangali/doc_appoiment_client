@@ -1,20 +1,74 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import dayArray from '../../../utils/dayNumber'
 import upcomingFivedays from '../../../utils/upcomingFivedays'
 import timeArray from '../../../utils/timeArray'
+import { validateAppointmentDate } from '../../../utils/validations'
+import { takeAppoinment } from '../../../service/appoiService'
 import moment from 'moment'
 
-function Booking({ working }) {
+function Booking({ working, docId, notAvailableDays }) {
 
+  const { user, accessToken } = useSelector(state => state.auth);
   const workingDays = {};
   dayArray.forEach((each) => {
     if (each.num >= working?.from && each.num <= working?.to) {
       workingDays[each.day] = true
     }
   });
+  const navigate = useNavigate();
+  const [booking, setBooking] = useState([]);
+  const [formData, setFormData] = useState();
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    setFormData({
+      doctorId: docId,
+      userId: user?._id,
+      date: '',
+      time: ''
+    });
+  }, [user])
+
+  const isLeave = (day) => {
+    return notAvailableDays.includes(moment().date(day).format("DD-MM-YYYY"))
+  }
+
+  const handleDate = (day) => {
+    if (isLeave(day)) {
+      alert('doctor is Leave, please book another day');
+      return;
+    }
+    setFormData(prev => {
+      return { ...prev, date: moment().date(day).format("DD-MM-YYYY") };
+    })
+  }
+  const handleTime = (time) => {
+    setFormData(prev => {
+      return { ...prev, time };
+    })
+  }
+
+  const handleBooking = async () => {
+    const error = validateAppointmentDate(formData);
+    if (Object.keys(error) > 0) {
+      alert("please select date and time");
+      return;
+    }
+    try {
+      const data = await takeAppoinment(accessToken, formData);
+      console.log(data);
+      if (data.success) {
+        navigate('/home')
+      }
+    } catch (error) {
+      setError(error)
+    }
+  }
 
   return (
-    <div className='flex justify-start'>
+    <div className='flex justify-start py-4'>
       <div className='border  border-gray-400 rounded-lg p-4 w-full max-w-6xl flex flex-col gap-4'>
         <h1 className='font-semibold text-formText'>Booking slots</h1>
         <div className='flex gap-4'>
@@ -23,11 +77,20 @@ function Booking({ working }) {
               workingDays[name] ? (
                 <div
                   key={ind}
-                  className="text-lg font-medium text-formText border w-14 py-4 flex flex-col
-                  items-center rounded-full border-gray-400 cursor-pointer hover:bg-slate-100"
-                >
-                  <p>{name.slice(0, 3)}</p>
-                  <p>{date}</p>
+                  className={`text-lg font-medium text-formText border w-14 py-4 flex flex-col  items-end justify-center
+                  ${moment(formData.date, 'DD-MM-YYYY').date() == date ? 'bg-bookingButton text-white hover:!bg-bookingButton' : ''}
+                  items-center rounded-full border-gray-400 cursor-pointer hover:bg-slate-100`}
+                  onClick={() => { handleDate(date) }}>
+                  {
+                    isLeave(date) ?
+                      <p className='text-formText text-xs text-center'>Doctor is leave</p>
+                      :
+                      <>
+                        <p>{name.slice(0, 3)}</p>
+                        <p>{date}</p>
+                      </>
+                  }
+
                 </div>
               ) : (
                 <div
@@ -45,8 +108,10 @@ function Booking({ working }) {
           {
             timeArray(working).map((time, ind) => {
               return (
-                <div key={ind} className='text-formText text-sm font-extralight border rounded-full px-3 py-2
-                hover:bg-slate-100 border-gray-300 cursor-pointer'
+                <div key={ind} className={`text-formText text-sm font-extralight border rounded-full px-3 py-2
+                 ${formData.time == time ? 'bg-bookingButton text-white hover:!bg-bookingButton' : ''}
+                hover:bg-slate-100 border-gray-300 cursor-pointer`}
+                  onClick={() => { handleTime(time) }}
                 >
                   <p>
                     {time} {time.split(':')[0] < 12 ? 'am' : 'pm'}
@@ -57,11 +122,13 @@ function Booking({ working }) {
           }
         </div>
         <div>
-          <button className='bg-bookingButton text-white text-sm px-16 py-3 rounded-full cursor-pointer'>
+          <button className='bg-bookingButton text-white text-sm px-16 py-3 rounded-full cursor-pointer'
+            onClick={handleBooking}>
             Book an appoinment
           </button>
         </div>
       </div>
+      {error && <p className='text-red-400'>{error}</p>}
     </div >
   )
 }

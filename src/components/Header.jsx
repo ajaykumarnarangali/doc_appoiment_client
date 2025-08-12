@@ -1,9 +1,20 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import Logo from '/logo.svg'
+import { useEffect, useRef } from 'react';
 
 function Header() {
+
+  const location = useLocation();
+  const headRef = useRef();
+
+  useEffect(() => {
+    if (headRef.current) {
+      headRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [location]);
+
   return (
-    <div className='h-20 border-b-[1px] border-black flex py-4 items-center justify-between px-3 lg:px-0'>
+    <div className='h-20 border-b-[1px] border-black flex py-4 items-center justify-between px-3 lg:px-0' ref={headRef}>
       <div className='w-44 h-9'>
         <img src={Logo} alt="" className='w-full h-full object-contain object-center' />
       </div>

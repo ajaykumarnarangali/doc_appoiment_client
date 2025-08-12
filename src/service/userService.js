@@ -78,3 +78,27 @@ export const getDoctor = async (token, id) => {
         throw err;
     }
 }
+
+export const getSimiliarDoctors = async (token, speciality, id) => {
+    const params = new URLSearchParams({
+        speciality,
+        notIncludeId: id,
+        limit: 4
+    });
+    try {
+        const res = await fetch(`${import.meta.env.VITE_BASE_URL}/doctor/search?${params}`, {
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        const data = await res.json();
+        if (!res.ok || data.success === false) {
+            throw new Error(data.message || 'doctors Fetching failed');
+        }
+        return data;
+    } catch (err) {
+        throw err;
+    }
+}
