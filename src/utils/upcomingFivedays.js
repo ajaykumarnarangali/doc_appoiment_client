@@ -1,6 +1,6 @@
 import moment from "moment";
 const upcomingFiveDays = [];
-for (let i = 0; i < 5; i++) {
+for (let i = 0; i < 7; i++) {
     const day = moment().add(i, 'days');
     const dateNum = day.date();
     const dayName = day.format('dddd');

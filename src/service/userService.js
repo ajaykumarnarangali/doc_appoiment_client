@@ -82,7 +82,7 @@ export const getDoctor = async (token, id) => {
 export const getSimiliarDoctors = async (token, speciality, id) => {
     const params = new URLSearchParams({
         speciality,
-        notIncludeId: id,
+        _id: id,
         limit: 4
     });
     try {

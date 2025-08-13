@@ -5,7 +5,7 @@ import { getSimiliarDoctors } from '../../../service/userService'
 import DocCard from '../../../components/DocCard'
 import Loader from '../../../components/Loader'
 
-function Suggetion({ speciality,docId }) {
+function Suggetion({ speciality, docId }) {
 
   const [doctors, setDoctors] = useState([]);
   const { accessToken } = useSelector(state => state.auth);
@@ -18,7 +18,7 @@ function Suggetion({ speciality,docId }) {
     const fetchDoctors = async () => {
       try {
         setLoading(true);
-        const data = await getSimiliarDoctors(accessToken, speciality,docId);
+        const data = await getSimiliarDoctors(accessToken, speciality, docId);
         if (data?.doctors) {
           setDoctors(data?.doctors);
         }
@@ -44,8 +44,8 @@ function Suggetion({ speciality,docId }) {
           <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
             {
               doctors.length > 0 ?
-                doctors.map((doctor) => (
-                  <DocCard doc={doctor} />
+                doctors.map((doctor, ind) => (
+                  <DocCard doc={doctor} key={ind} />
                 ))
                 :
                 <p className="py-6 text-formText">No doctor find...</p>
