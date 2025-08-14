@@ -7,7 +7,7 @@ function DocDetails({ doctor, error }) {
     return (
         <div>
             <div className='w-full flex gap-2 flex-col md:flex-row text-sm items-start lg:justify-center'>
-                <div className="flex lg:flex-col gap-2 lg:gap-0">
+                <div className="flex lg:flex-col gap-2 lg:gap-0 border-2 p-2">
                     <div className='w-40 h-40 lg:w-60 lg:h-60 md:ms-2 rounded-lg overflow-hidden'>
                         <img src={doctor?.image?.url} alt="docImg" className="w-full h-full object-cover" />
                     </div>

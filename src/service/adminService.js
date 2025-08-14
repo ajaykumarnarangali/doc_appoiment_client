@@ -20,21 +20,18 @@ export const DoctorReg = async (token, payload) => {
     }
 };
 
-export const getAlldoctors = async (token) => {
+export const getAlldoctors = async () => {
     try {
         const res = await fetch(`${import.meta.env.VITE_BASE_URL}/admin/all-doctors`, {
             method: 'GET',
-            credentials: 'include',
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }
+            credentials: 'include'
         });
 
         const data = await res.json();
-
         if (!res.ok || data.success === false) {
             throw new Error(data.message || 'doctor fetch failed');
         }
+        console.log(res);
         return data;
     } catch (err) {
         throw err;

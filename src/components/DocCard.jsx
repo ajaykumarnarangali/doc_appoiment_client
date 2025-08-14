@@ -13,7 +13,7 @@ function DocCard({ doc }) {
                         <p className="text-green-400">Available</p>
                     </div>
                     <h1 className="text-md font-medium">Dr {doc?.username}</h1>
-                    <h1 className="text-xs text-formText">Dr {doc?.speciality}</h1>
+                    <h1 className="text-xs text-formText">{doc?.speciality}</h1>
                 </div>
             </div>
         </Link>
