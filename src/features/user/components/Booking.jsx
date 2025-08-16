@@ -52,7 +52,7 @@ function Booking({ working, docId, notAvailableDays }) {
 
 
   const isLeave = (day) => {
-    return notAvailableDays.includes(moment().date(day).format("DD-MM-YYYY"))
+    return notAvailableDays.includes(moment().date(day).format("YYYY-MM-DD"))
   }
 
   const handleDate = (day) => {
@@ -130,7 +130,7 @@ function Booking({ working, docId, notAvailableDays }) {
               return bookedSlots?.includes(time) ?
                 (
                   <div key={ind} className={`text-formText flex-shrink-0 text-sm font-extralight border rounded-full px-3 py-2
-                hover:bg-slate-100 border-gray-300 cursor-pointer`}
+                bg-slate-100 border-gray-300 cursor-pointer`}
                     onClick={() => { alert('slot already booked . please select another') }}
                   >
                     <p>
