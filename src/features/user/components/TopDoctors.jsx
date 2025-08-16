@@ -28,7 +28,7 @@ function TopDoctors() {
                 }
             </div>
             <div className='mt-8 flex justify-center'>
-                <Link to={'/doctor'} className='text-formText px-10 py-3 bg-slate-100 rounded-full'>
+                <Link to={'/doctor/search'} className='text-formText px-10 py-3 bg-slate-100 rounded-full'>
                     more
                 </Link>
             </div>

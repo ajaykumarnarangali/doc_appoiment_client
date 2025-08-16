@@ -5,7 +5,7 @@ function DocCard({ doc }) {
         <Link to={`/appoinment/${doc?._id}`}>
             <div className='bg-white rounded-lg overflow-hidden flex gap-2 flex-col border-2 border-gray-200 '>
                 <div>
-                    <img src={doc?.image?.url} alt="" className="w-full h-60 lg:h-64 object-cover object-center" />
+                    <img src={doc?.image?.url} alt="" className="w-full lg:h-64 object-cover object-center" />
                 </div>
                 <div className="px-4 mb-6">
                     <div className="flex items-center gap-2">

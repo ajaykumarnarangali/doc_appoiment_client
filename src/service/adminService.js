@@ -31,7 +31,6 @@ export const getAlldoctors = async () => {
         if (!res.ok || data.success === false) {
             throw new Error(data.message || 'doctor fetch failed');
         }
-        console.log(res);
         return data;
     } catch (err) {
         throw err;

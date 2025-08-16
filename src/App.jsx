@@ -10,6 +10,7 @@ import About from './pages/user/About'
 import Otp from './pages/user/Otp'
 import Profile from './features/user/ProfileForm'
 import AppoinmentPage from './pages/user/AppoinmentPage'
+import SearchPage from './pages/user/SearchPage'
 
 import AdminLayout from './layout/AdminLayout'
 import AdminLogin from './pages/admin/AdminLogin'
@@ -40,6 +41,7 @@ function App() {
         { path: '/about', element: <About /> },
         { path: '/profile', element: <Profile /> },
         { path: '/appoinment/:docId', element: <AppoinmentPage /> },
+        { path: '/doctor/search', element: <SearchPage /> },
       ],
     },
     {

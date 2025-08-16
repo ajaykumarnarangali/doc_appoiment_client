@@ -18,7 +18,7 @@ function Suggetion({ speciality, docId }) {
     const fetchDoctors = async () => {
       try {
         setLoading(true);
-        const data = await getSimiliarDoctors(accessToken, speciality, docId);
+        const data = await getSimiliarDoctors(speciality, docId);
         if (data?.doctors) {
           setDoctors(data?.doctors);
         }
